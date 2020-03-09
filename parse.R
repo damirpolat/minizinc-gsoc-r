@@ -1,4 +1,5 @@
 #parse.R
+#This is a Python interface like approach to this package
 #Damir Pulatov
 library(R6)
 library(rjson)
@@ -17,6 +18,9 @@ Model = R6Class("Model", list(
     }
   },
   solve = function(solver = "gecode") {
+    #Find out how to call bash instead of sh
+    #and source .bashrc file
+    #Create some exception handling 
     cmd = paste("/home/damir/software/MiniZincIDE-2.4.2-bundle-linux/bin/minizinc", self$file, "-o tmp.out", sep = " ")
     cmd = paste(cmd, "--output-mode", mode, sep = " ")
     system(cmd)
@@ -26,6 +30,7 @@ Model = R6Class("Model", list(
   }
 ))
 
+#initial test
 model = Model$new()
 model$add_string(code = "
 var 1..10: x;
