@@ -1,0 +1,15 @@
+Package: minizinc
+Title: Object Oriented Interface to Minizinc in R 
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Damir",
+           family = "Pulatov",
+           role = c("aut", "cre"),
+           email = "dpulatov@uwyo.edu",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+Imports: 
+	R6
