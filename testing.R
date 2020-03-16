@@ -6,7 +6,7 @@ install_local(".", upgrade = "never")
 rm(list=ls())
 library(minizinc)
 
-
+  
 p1 = Variable$new(type = "int", value = 3, kind = "parameter")
 v1 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
 v2 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
