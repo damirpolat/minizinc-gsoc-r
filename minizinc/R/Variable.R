@@ -1,5 +1,14 @@
 #' @title Variable Class
 #'
+#' @description
+#' Variable is a class to describe both parameter and decision variables.
+#' It contains information that is needed to define a Minizinc variable, such as
+#' type (int, bool, float, etc),
+#' kind (decision, parameter),
+#' value
+#' domain
+#'
+#'
 
 Variable = R6Class("Variable", list(
   type       = NULL,

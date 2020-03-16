@@ -9,6 +9,11 @@
 Variable
 }
 \description{
-Variable Class
+Variable is a class to describe both parameter and decision variables.
+It contains information that is needed to define a Minizinc variable, such as
+type (int, bool, float, etc),
+kind (decision, parameter),
+value
+domain
 }
 \keyword{datasets}
