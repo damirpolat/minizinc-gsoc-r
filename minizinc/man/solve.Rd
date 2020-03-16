@@ -10,7 +10,7 @@ solve(model, solver = "gecode")
 \item{model}{[\code{Model}]\cr
 Model that contains variables, constraints and objective.}
 
-\item{Solver}{object that specifies both solver and its configuration. Default is gecode.}
+\item{solver}{Solver object that specifies both solver and its configuration.}
 }
 \value{
 data.frame object with results

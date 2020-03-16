@@ -5,8 +5,8 @@
 #' 
 #' @param model [\code{Model}]\cr
 #'   Model that contains variables, constraints and objective. 
-#' @param 
-#'   Solver object that specifies both solver and its configuration. Default is gecode. 
+#' @param solver 
+#'   Solver object that specifies both solver and its configuration.  
 #'   
 #' @return data.frame object with results
 #' @export
@@ -24,24 +24,28 @@ solve = function(model, solver = "gecode") {
   if(!ret) {
     message("Error. I'll add exception later")
   }
-  code = sprintf("%s: %s = %s;\n", parameter[[1]]$type, parameter[[1]]$name, 
-                parameter[[1]]$value)
-  code = sprintf("%svar %s..%s: %s;\n", code, decision[[1]]$domain[1], 
-                 decision[[1]]$domain[2], decision[[1]]$name)
-  code = sprintf("%svar %s..%s: %s;\n", code, decision[[2]]$domain[1], 
-                 decision[[2]]$domain[2], decision[[2]]$name)
-  code = sprintf("%sconstraint %s %s %s;\n", code, constraints[[1]]$variables[[1]]$name, 
-                 constraints[[1]]$constraint, constraints[[1]]$variables[[2]]$name)
   
+  #build minizinc code from objects
+  code = ""
   
-  #code = sprintf(code, "var ", decision[[1]]$domain[1], "..", decision[[1]]$domain[2], 
-  #             ": v1;\n", sep = "")
-  #code = paste(code, "var ", decision[[2]]$domain[1], "..", decision[[2]]$domain[2], 
-  #             ": v2;\n", sep = "")
+  #add parameter variables
+  for(i in 1:length(parameter)) {
+    code = sprintf("%s%s: %s = %s;\n", code, parameter[[i]]$type, parameter[[i]]$name, 
+                   parameter[[i]]$value)
+  }
   
-  #add constraint
-  #code = paste(code, "constraint ", constraints[[1]]$variables[[1]]$name, 
-  #             " ", constraints[[1]]$)
+  #add definitions for decision variables
+  for(i in 1:length(decision)) {
+    code = sprintf("%svar %s..%s: %s;\n", code, decision[[i]]$domain[1], 
+                   decision[[i]]$domain[2], decision[[i]]$name)
+  }
+  
+  #add constraints
+  for(i in 1:length(constraints)) {
+    code = sprintf("%sconstraint %s %s %s;\n", code, constraints[[i]]$variables[[1]]$name, 
+                   constraints[[1]]$constraint, constraints[[i]]$variables[[2]]$name)
+  }
+  
   write(code, file = "tmp.mzn", append = FALSE)
   
   cmd = paste("/home/damir/software/MiniZincIDE-2.4.2-bundle-linux/bin/minizinc tmp.mzn -o tmp.out", sep = " ")
