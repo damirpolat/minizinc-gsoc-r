@@ -14,5 +14,8 @@ First, you need to create a model object that can take Minizinc code as string a
 For R interface I want to use OOP principles and create objects that describe a model. This will be more intuitive for R programmers since this way they don’t need to know Minizinc syntax, as I think most R programmers won’t. The drawback for this approach is then interfacing minizinc language with R objects. I’ll have to do tons of parsing. 
 
 ## Hard 
+Only works for binary constraints (for now). 
 See package examples. 
 
+### Note
+The work is still in progress. I haven't implemented all features that I want to see before submitting this to Google Summer of Code. 
