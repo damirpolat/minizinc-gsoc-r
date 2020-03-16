@@ -4,9 +4,10 @@
 \name{minizinc}
 \alias{minizinc}
 \alias{.globals}
-\alias{minizinc-package}
 \title{R Interface to Minizinc}
-\format{An object of class \code{environment} of length 1.}
+\format{
+An object of class \code{environment} of length 1.
+}
 \usage{
 .globals
 }

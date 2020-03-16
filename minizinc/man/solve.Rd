@@ -4,7 +4,7 @@
 \alias{solve}
 \title{Solve models}
 \usage{
-solve(model, solver = "gecode")
+solve(model, solver)
 }
 \arguments{
 \item{model}{[\code{Model}]\cr
@@ -13,8 +13,9 @@ Model that contains variables, constraints and objective.}
 \item{solver}{Solver object that specifies both solver and its configuration.}
 }
 \value{
-data.frame object with results
+list with results
 }
 \description{
-This function is used to solve a given model.
+This function is used to solve a given model. The function returns
+solution in list format.
 }

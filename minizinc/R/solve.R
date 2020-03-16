@@ -1,17 +1,19 @@
 #' @title Solve models
 #'
 #' @description
-#' This function is used to solve a given model.
+#' This function is used to solve a given model. The function returns
+#' solution in list format.
+#'
 #'
 #' @param model [\code{Model}]\cr
 #'   Model that contains variables, constraints and objective.
 #' @param solver
 #'   Solver object that specifies both solver and its configuration.
 #'
-#' @return data.frame object with results
+#' @return list with results
 #' @export
 
-solve = function(model, solver = "gecode") {
+solve = function(model, solver) {
   #perform type checking and assertions
   #different action depending on objective
   decision = model$decision
@@ -22,7 +24,7 @@ solve = function(model, solver = "gecode") {
   #create tmp file that contains minizinc code
   ret = file.create("tmp.mzn")
   if(!ret) {
-    message("Error. I'll add exception later")
+    stop("Cannot create a file with Minizinc code. Check permissions.", call. = TRUE)
   }
 
   #build minizinc code from objects
@@ -43,15 +45,19 @@ solve = function(model, solver = "gecode") {
   #add constraints
   for(i in 1:length(constraints)) {
     code = sprintf("%sconstraint %s %s %s;\n", code, constraints[[i]]$variables[[1]]$name,
-                   constraints[[1]]$constraint, constraints[[i]]$variables[[2]]$name)
+                   constraints[[i]]$constraint, constraints[[i]]$variables[[2]]$name)
   }
 
   write(code, file = "tmp.mzn", append = FALSE)
 
   #get minizinc path
   path = get_path()
+  if(is.null(path)) {
+    stop("Path to Minizinc is not set. Set path using set_path()", call. = TRUE)
+  }
   cmd = sprintf("%s tmp.mzn -o tmp.out", path)
-  cmd = paste(cmd, "--output-mode json", sep = " ")
+  cmd = sprintf("%s --solver %s", cmd, solver$name)
+  cmd = sprintf("%s --output-mode json", cmd)
   system(cmd)
   retval = fromJSON(file = "tmp.out")
 

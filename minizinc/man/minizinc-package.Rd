@@ -9,6 +9,6 @@
 
 }
 \author{
-\strong{Maintainer}: Damir Pulatov \email{dpulatov@uwyo.edu} (YOUR-ORCID-ID)
+\strong{Maintainer}: Damir Pulatov \email{dpulatov@uwyo.edu} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
 
 }
