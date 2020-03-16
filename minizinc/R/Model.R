@@ -1,19 +1,17 @@
-#Model.R
-#Damir Pulatov
+#' @title Model Class
+#'
 
 Model = R6Class("Model", list(
-  variables     = NULL,
+  parameter     = NULL,
+  decision      = NULL,
   constraints   = NULL,
-  solver        = "gecode",
   objective     = NULL,
-  initialize = function(variables = NULL, constraints = NULL, solver = NULL, 
+  #' @export
+  initialize = function(parameter = NULL, decision = NULL, constraints = NULL,
                         objective = NULL) {
-    self$variables = variables
+    self$parameter = parameter
+    self$decision = decision
     self$constraints = constraints
-    self$solver = solver
     self$objective = objective
-  }    
-  solve = function() {
-   #different action depending on objective 
   }
 ))
