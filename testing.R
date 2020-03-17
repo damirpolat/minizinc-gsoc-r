@@ -1,7 +1,7 @@
 library(devtools)
 document()
 remove.packages("minizinc")
-install_local(".", upgrade = "never")
+install_local(".", build_vignettes = TRUE, upgrade = "never")
 .rs.restartR()
 rm(list=ls())
 library(minizinc)
