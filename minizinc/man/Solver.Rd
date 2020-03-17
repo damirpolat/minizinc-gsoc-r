@@ -8,6 +8,12 @@ Solver is a class to describe a Minizinc solver.
 It contains information that is needed to define a Minizinc solver, such as
 a name of the solver and its configuration.
 }
+\examples{
+# Create a solver object
+s = Solver$new(name = "gecode")
+s$name
+s$config
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

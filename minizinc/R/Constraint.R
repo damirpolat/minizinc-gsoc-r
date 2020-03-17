@@ -6,8 +6,14 @@
 #' type of constraint (==, >, etc.) and variables involved in a given constraint.
 #'
 #' @export
+#' @examples
+#' # Create variables and constraints
+#' d1 = Variable$new(type = "int", kind = "decision", domain = c(0, 10))
+#' d2 = Variable$new(type = "int", kind = "decision", domain = c(0, 10))
 #'
-
+#' constr = Constraint$new(constraint = "<", variables = c(d1, d2))
+#' constr$constraint
+#' constr$variables
 Constraint = R6Class("Constraint",
   public = list(
     #' @field constraint
@@ -45,9 +51,9 @@ Constraint = R6Class("Constraint",
   private = list(
     #' @field name
     #' Constraint character name for internal use within Minizinc model.
-    .static = env(constraint = 0),
+    .name = NULL,
 
-    .name = NULL
+    .static = env(constraint = 0)
   )
 
 )

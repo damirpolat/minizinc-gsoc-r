@@ -8,6 +8,15 @@ Constraint is a class to describe Minizinc constraints on variables.
 It contains information that is needed to define a Minizinc constraint, such as
 type of constraint (==, >, etc.) and variables involved in a given constraint.
 }
+\examples{
+# Create variables and constraints
+d1 = Variable$new(type = "int", kind = "decision", domain = c(0, 10))
+d2 = Variable$new(type = "int", kind = "decision", domain = c(0, 10))
+
+constr = Constraint$new(constraint = "<", variables = c(d1, d2))
+constr$constraint
+constr$variables
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

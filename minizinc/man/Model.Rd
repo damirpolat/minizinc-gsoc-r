@@ -8,6 +8,18 @@ Model is a class to describe a Minizinc model.
 It contains information that is needed to define a Minizinc model, such as
 a list of variables, constraints and model objective (e.g. satisfy).
 }
+\examples{
+# Create variables, constraints and put them in a model
+v1 = Variable$new(type = "int", kind = "decision", domain = c(0, 10))
+v1 = Variable$new(type = "int", kind = "decision", domain = c(0, 5))
+
+constr = Constraint$new(constraint = "<", variables = c(v1, v2))
+
+model = Model$new(decision = c(v1, v2), constraints = c(constr),
+                  objective = "satisfy")
+model$decision
+model$constraints
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

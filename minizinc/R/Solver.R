@@ -6,8 +6,11 @@
 #' a name of the solver and its configuration.
 #'
 #' @export
-#'
-
+#' @examples
+#' # Create a solver object
+#' s = Solver$new(name = "gecode")
+#' s$name
+#' s$config
 Solver = R6Class("Solver",
   public = list(
     #' @field name

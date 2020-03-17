@@ -12,12 +12,30 @@
 #'
 #' @return list with results
 #' @export
-
+#' @examples
+#' # Create and solve a Minizinc model
+#' var1 = Variable$new(type = "int", kind = "decision", domain = c(0, 10))
+#' var1 = Variable$new(type = "int", kind = "decision", domain = c(0, 5))
+#'
+#' constr = Constraint$new(constraint = "<", variables = c(var1, var2))
+#'
+#' model = Model$new(decision = c(var1, var2), constraints = c(constr),
+#'                   objective = "satisfy")
+#' solver = Solver$new(name = "gecode")
+#'
+#' res = solve(model, solver)
+#' print(res)
 solve = function(model, solver) {
   # perform type checking and assertions
   # different action depending on objective
   decision = model$decision
-  parameter = model$parameter
+
+  if(!is.null(model$parameter)) {
+    parameter = model$parameter
+  } else {
+    parameter = NULL
+  }
+
   constraints = model$constraints
   obj = model$objective
 
@@ -32,9 +50,11 @@ solve = function(model, solver) {
   code = ""
 
   # add parameter variables
-  for(i in 1:length(parameter)) {
-    code = sprintf("%s%s: %s = %s;\n", code, parameter[[i]]$type,
-                   parameter[[i]]$get_name(), parameter[[i]]$value)
+  if(!is.null(parameter)) {
+    for(i in 1:length(parameter)) {
+      code = sprintf("%s%s: %s = %s;\n", code, parameter[[i]]$type,
+                     parameter[[i]]$get_name(), parameter[[i]]$value)
+    }
   }
 
   # add definitions for decision variables

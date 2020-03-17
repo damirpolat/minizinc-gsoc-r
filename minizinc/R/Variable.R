@@ -6,8 +6,20 @@
 #' type (int, bool, float, etc), kind (decision, parameter), value, domain.
 #'
 #' @export
+#' @examples
+#' # Create a parameter variable
+#' p = Variable$new(type = "int", kind = "parameter", value = 7)
 #'
-
+#' p$kind
+#' p$value
+#' p$type
+#' p$get_name()
+#'
+#' # Create a decision variable
+#' d = Variable$new(type = "int", kind = "decision", domain = c(0, 10))
+#' d$kind
+#' d$type
+#' d$domain
 Variable = R6Class("Variable",
   public = list(
     #' @field type
