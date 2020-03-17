@@ -1,0 +1,19 @@
+---
+title: "Minizinc Interface for R"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Minizinc Interface in R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(minizinc)
+```
