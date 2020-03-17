@@ -14,6 +14,135 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+## Introduction
+Minizinc is a high-level constraint modeling language that researchers and developers can use to describe their domain problems in. The biggest advantage of using Minizinc is that it is solver-independent and provides a unified interface to many popular constraint satisfaction and optimization solvers.
+
+The goal of this package is to bring the power of Minizinc to R users in a way that does not require any knowledge of Minizinc. 
+This way, users can program in R like they would normally do, and still have the access to all features and constraints provided by Minizinc as well as low-level solvers. 
+
+This document introduces you to the basic usage of the package. 
+
+Most of the package is written in object-oriented style using R6. If you need a refresher on R6 OOP system or are not familiar with it, here is a basic [tutorial](https://adv-r.hadley.nz/r6.html).
+
+For more information on Minizinc, visit [Minizinc](https://www.minizinc.org/). 
+
+A lot of information in this vignette is taken from the official [Minizinc Handbook](https://www.minizinc.org/doc-2.4.3/en/modelling.html). 
+
+# Variables
+There are two types of variables in interface package -- decision and parameter. 
+
+Parameter variable is a variable that is used to specify a parameter in a given problem. For example, a maximum value a decision variable can hold. Parameter variables can be integers (int), floating point numbers (float), Booleans (bool) and strings (string). 
+
+Decision variables are the unknowns that Minizinc model is finding solutions for. We do not need to give them a value, but instead we give them a domain of possible values. Decision variables need to satisfy a set of constraints that a user specifies in the model. 
+Below are examples of how we can create both variable types. 
+
+```{r}
 library(minizinc)
+par = Variable$new(type = "float", kind = "parameter", value = 0.8)
+dec = Variable$new(type = "float", kind = "decision", domain = c(0, 1))
 ```
+
+More information on variable is available in `?Variable`. 
+
+# Constraints
+Constraints specify the Boolean expressions that decision variables must satisfy. Examples of such constraints are given below. 
+
+```{r}
+par = Variable$new(type = "float", kind = "parameter", value = 0.8)
+var1 = Variable$new(type = "float", kind = "decision", domain = c(0, par$value))
+var2 = Variable$new(type = "float", kind = "decision", domain = c(0, par$value))
+
+constraint = Constraint$new(constraint = ">=", variables = c(var1, var2))
+```
+
+For now, this package can only support relational constraints that involve two variables at a time only. 
+
+# Solvers
+A standard Minizinc distribution contains a few solvers. To find a solution to problem, we can choose which solver for a given problem. The default solver is Gecode. In order to use a solver, we need to first create a solver object in R.
+
+```{r}
+s = Solver$new(name = "gecode")
+```
+
+There is also `config` field in Solver class that is not currently utilized. Support for manually configuring solvers will be added later. 
+
+# Models
+Now that we have all parts to specify a problem, we need to put these parts together in a model object. We also need to specify an objective of our problem (satisfy, maximize, minimize). 
+
+Below is an example of map coloring problem of Australian states. 
+
+```{r}
+# parameter variable
+p1 = Variable$new(type = "int", value = 3, kind = "parameter")
+
+# decision variables
+v1 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
+v2 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
+v3 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
+v4 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
+v5 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
+v6 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
+v7 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
+vars = c(v1, v2, v3, v4, v5, v6, v7)
+
+# constraints
+c1 = Constraint$new(constraint = "!=", variables = c(v1, v2))
+c2 = Constraint$new(constraint = "!=", variables = c(v1, v3))
+c3 = Constraint$new(constraint = "!=", variables = c(v2, v3))
+c4 = Constraint$new(constraint = "!=", variables = c(v2, v4))
+c5 = Constraint$new(constraint = "!=", variables = c(v3, v4))
+c6 = Constraint$new(constraint = "!=", variables = c(v3, v5))
+c7 = Constraint$new(constraint = "!=", variables = c(v3, v6))
+c8 = Constraint$new(constraint = "!=", variables = c(v4, v5))
+c9 = Constraint$new(constraint = "!=", variables = c(v5, v6))
+constr = c(c1, c2, c3, c4, c5, c6, c7, c8, c9)
+
+# solver
+s = Solver$new(name  = "gecode")
+
+# putting it all together
+m = Model$new(parameter = c(p1), decision = vars, constraints = constr, 
+              objective = "satisfy")
+```
+
+Before solving the problem we also need to specify the path to our Minizinc installation. For example on my system, 
+
+```{r}
+set_path("/home/damir/software/MiniZincIDE-2.4.2-bundle-linux/bin/minizinc")
+```
+
+
+After everything is set up, all we need to do is 
+
+```{r}
+res = solve(m, s)
+print(res)
+```
+
+A Minizinc implementation of the same problem is given below:
+
+```{minizinc}
+% Colouring Australia using nc colours
+int: nc = 3;
+
+var 1..nc: wa;   var 1..nc: nt;  var 1..nc: sa;   var 1..nc: q;
+var 1..nc: nsw;  var 1..nc: v;   var 1..nc: t;
+
+constraint wa != nt;
+constraint wa != sa;
+constraint nt != sa;
+constraint nt != q;
+constraint sa != q;
+constraint sa != nsw;
+constraint sa != v;
+constraint q != nsw;
+constraint nsw != v;
+solve satisfy;
+
+output ["wa=\(wa)\t nt=\(nt)\t sa=\(sa)\n",
+        "q=\(q)\t nsw=\(nsw)\t v=\(v)\n",
+         "t=", show(t),  "\n"];
+```
+
+
+That is. We just solved our first constraint satisfaction problem without knowing anything about Minizinc and just programming in R!
