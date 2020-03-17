@@ -8,28 +8,6 @@ Variable is a class to describe both parameter and decision variables.
 It contains information that is needed to define a Minizinc variable, such as
 type (int, bool, float, etc), kind (decision, parameter), value, domain.
 }
-\section{Construction}{
-
-
-```
-v = Variable$new(type, kind, value, domain)
-```
-
-* `type` :: `character(1)`\cr
-Type of the variable.
-
-* `kind` :: `character(1)`\cr
-Variable kind.
-
-* `kind` :: `character(1)`\cr
-Value of the variable.
-
-* `domain` :: `list(1)`\cr
-Variable domain.
-
-Creates a new instance of this [R6][R6::R6Class] class.
-}
-
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -43,7 +21,14 @@ parameter variables.}
 \item{\code{domain}}{Domain of valid values for a decision variable. Domain is only
 meaningful for decision variables.}
 
-\item{\code{name}}{Name of variable as it will appear in Minizinc.}
+\item{\code{name}}{Variable character name for internal use within Minizinc model.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{name}}{Variable character name for internal use within Minizinc model.}
 }
 \if{html}{\out{</div>}}
 }
@@ -51,6 +36,7 @@ meaningful for decision variables.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{Variable$new()}}
+\item \href{#method-get_name}{\code{Variable$get_name()}}
 \item \href{#method-clone}{\code{Variable$clone()}}
 }
 }
@@ -58,8 +44,19 @@ meaningful for decision variables.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
+Creates a new instance of this [R6][R6::R6Class] class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Variable$new(type, kind, value = NULL, domain = NULL)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_name"></a>}}
+\if{latex}{\out{\hypertarget{method-get_name}{}}}
+\subsection{Method \code{get_name()}}{
+Returns variable name that is used in Minizinc model.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Variable$get_name()}\if{html}{\out{</div>}}
 }
 
 }

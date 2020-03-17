@@ -7,10 +7,10 @@
 solve(model, solver)
 }
 \arguments{
-\item{model}{[\code{Model}]\cr
-Model that contains variables, constraints and objective.}
+\item{model}{\code{\link{Model}}
+Object of class Model.}
 
-\item{solver}{Solver object that specifies both solver and its configuration.}
+\item{solver}{Object of class Solver.}
 }
 \value{
 list with results

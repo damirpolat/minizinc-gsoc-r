@@ -4,9 +4,22 @@
 \alias{Model}
 \title{Model Class}
 \description{
-Model Class
+Model is a class to describe a Minizinc model.
+It contains information that is needed to define a Minizinc model, such as
+a list of variables, constraints and model objective (e.g. satisfy).
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{parameter}}{A list of parameter \code{\link{Variable}} objects.}
 
-Model Class
+\item{\code{decision}}{A list of decision \code{\link{Variable}} objects.}
+
+\item{\code{constraints}}{A list of \code{\link{Constraint}} objects.}
+
+\item{\code{objective}}{Model objective, which can be either of satisfy, maximize or minimize.}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -19,6 +32,7 @@ Model Class
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
+Creates a new instance of Model class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Model$new(
   parameter = NULL,

@@ -4,14 +4,39 @@
 \alias{Constraint}
 \title{Constraint Class}
 \description{
-Constraint Class
+Constraint is a class to describe Minizinc constraints on variables.
+It contains information that is needed to define a Minizinc constraint, such as
+type of constraint (==, >, etc.) and variables involved in a given constraint.
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{constraint}}{Constraints specify the Boolean expressions that the decision variables
+must satisfy to be a valid solution to the model.
+For now, only relational operators are supported:
+==, !=, <, >, <=, >=.
 
-Constraint Class
+Taken from Minizinc documentation.}
+
+\item{\code{variables}}{A list of objects of
+\code{\link{Variable}} class.}
+
+\item{\code{name}}{Constraint character name for internal use within Minizinc model.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{name}}{Constraint character name for internal use within Minizinc model.}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{Constraint$new()}}
+\item \href{#method-get_name}{\code{Constraint$get_name()}}
 \item \href{#method-clone}{\code{Constraint$clone()}}
 }
 }
@@ -19,8 +44,19 @@ Constraint Class
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
+Creates a new instance of this [R6][R6::R6Class] class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Constraint$new(constraint = NULL, variables = NULL)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_name"></a>}}
+\if{latex}{\out{\hypertarget{method-get_name}{}}}
+\subsection{Method \code{get_name()}}{
+Returns constraint name that is used in Minizinc
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Constraint$get_name()}\if{html}{\out{</div>}}
 }
 
 }

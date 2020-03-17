@@ -8,68 +8,61 @@
 #' @export
 #'
 
-Variable = R6Class("Variable", list(
-  #' @field type
-  #' Type of variable (int, float, bool, etc.).
-  type       = NULL,
+Variable = R6Class("Variable",
+  public = list(
+    #' @field type
+    #' Type of variable (int, float, bool, etc.).
+    type = NULL,
 
-  #' @field kind
-  #' Kind of variable (parameter, decision).
-  kind       = NULL,
+    #' @field kind
+    #' Kind of variable (parameter, decision).
+    kind = NULL,
 
-  #' @field value
-  #' Value assigned to this variable. Value is only meaningful for
-  #' parameter variables.
-  value      = NULL,
+    #' @field value
+    #' Value assigned to this variable. Value is only meaningful for
+    #' parameter variables.
+    value = NULL,
 
-  #' @field domain
-  #' Domain of valid values for a decision variable. Domain is only
-  #' meaningful for decision variables.
-  domain     = NULL,
+    #' @field domain
+    #' Domain of valid values for a decision variable. Domain is only
+    #' meaningful for decision variables.
+    domain = NULL,
 
-  #' @field name
-  #' Name of variable as it will appear in Minizinc.
-  name       = NULL,
-  static     = env(parameter = 0,
-                   decision = 0),
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function(type, kind, value = NULL, domain = NULL) {
+      self$type      = type
+      self$kind      = kind
+      if(kind == "parameter" && !is.null(value)) {
+        self$value = value
+      }
+      if(kind == "decision" && !is.null(domain)) {
+        self$domain = domain
+      }
 
-  #' @section Construction:
-  #'
-  #' ```
-  #' v = Variable$new(type, kind, value, domain)
-  #' ```
-  #'
-  #' * `type` :: `character(1)`\cr
-  #' Type of the variable.
-  #'
-  #' * `kind` :: `character(1)`\cr
-  #' Variable kind.
-  #'
-  #' * `kind` :: `character(1)`\cr
-  #' Value of the variable.
-  #'
-  #' * `domain` :: `list(1)`\cr
-  #' Variable domain.
-  #'
-  #' Creates a new instance of this [R6][R6::R6Class] class.
-  initialize = function(type, kind, value = NULL, domain = NULL) {
-    self$type      = type
-    self$kind      = kind
-    if(kind == "parameter" && !is.null(value)) {
-      self$value = value
+      # update variable name counts
+      if(self$kind == "parameter") {
+        private$.static$parameter = private$.static$parameter + 1
+        private$.name = paste("p", private$.static$parameter, sep = "")
+      }
+      if(self$kind == "decision") {
+        private$.static$decision = private$.static$decision + 1
+        private$.name = paste("d", private$.static$decision, sep = "")
+      }
+    },
+
+    #' @description
+    #' Returns variable name that is used in Minizinc model.
+    get_name = function() {
+      return(private$.name)
     }
-    if(kind == "decision" && !is.null(domain)) {
-      self$domain = domain
-    }
+  ),
 
-    #update variable name counts
-    if(self$kind == "parameter") {
-      self$static$parameter = self$static$parameter + 1
-      self$name = paste("p", self$static$parameter, sep = "")
-    }
-    if(self$kind == "decision") {
-      self$static$decision = self$static$decision + 1
-      self$name = paste("d", self$static$decision, sep = "")
-    }
-  }
-))
+  private = list(
+    #' @field name
+    #' Variable character name for internal use within Minizinc model.
+    .name = NULL,
+
+    .static = env(parameter = 0, decision = 0)
+  )
+)

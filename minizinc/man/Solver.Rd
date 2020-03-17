@@ -4,9 +4,18 @@
 \alias{Solver}
 \title{Solver Class}
 \description{
-Solver Class
+Solver is a class to describe a Minizinc solver.
+It contains information that is needed to define a Minizinc solver, such as
+a name of the solver and its configuration.
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{name}}{A character name of solver. Default is "gecode".}
 
-Solver Class
+\item{\code{config}}{A list of configuration passed to Minizinc solver.}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -19,6 +28,7 @@ Solver Class
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
+Creates a new instance of Solver class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Solver$new(name = NULL, config = NULL)}\if{html}{\out{</div>}}
 }
