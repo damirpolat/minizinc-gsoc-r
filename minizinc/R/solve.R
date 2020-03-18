@@ -47,7 +47,7 @@ solve = function(model, solver) {
   }
 
   # get Minizinc code
-  code = .convert_minizinc(decision, parameter, constraints)
+  code = convert_minizinc(decision, parameter, constraints)
 
   write(code, file = "tmp.mzn", append = FALSE)
 
@@ -58,13 +58,12 @@ solve = function(model, solver) {
   }
 
   # Build system command
-  cmd = .write_cmd(path, solver)
-
+  cmd = write_cmd(path, solver)
   system(cmd)
   res = fromJSON(file = "tmp.out")
 
   # assign solutions to variables
-  .assign_vars(res)
+  assign_vars(res, decision)
 
   return(res)
 }
@@ -83,7 +82,9 @@ solve = function(model, solver) {
 #'   A list of \code{\link{Constraint}} objects
 #'
 #' @return string with Minizinc code
-.convert_minizinc = function(decision, parameter, constraints) {
+#'
+#' @keywords internal
+convert_minizinc = function(decision, parameter, constraints) {
   # build minizinc code from objects
   code = ""
 
@@ -122,7 +123,9 @@ solve = function(model, solver) {
 #'
 #' @param solver
 #' \code{\link{Solver}} object
-.write_cmd = function(path, solver) {
+#'
+#' @keywords internal
+write_cmd = function(path, solver) {
   cmd = sprintf("%s tmp.mzn -o tmp.out", path)
   cmd = sprintf("%s --solver %s", cmd, solver$name)
   cmd = sprintf("%s --output-mode json", cmd)
@@ -138,11 +141,16 @@ solve = function(model, solver) {
 #'
 #' @param result
 #' A named list with results
-.assign_vars = function(result) {
+#'
+#' @param vars
+#' A list of parameter \code{\link{Variable}} objects
+#'
+#' @keywords internal
+assign_vars = function(result, vars) {
   for(i in 1:length(names(result))) {
-    for(j in 1:length(decision)) {
-      if(names(result)[i] == decision[[j]]$get_name()) {
-        decision[[j]]$value = result[[i]]
+    for(j in 1:length(vars)) {
+      if(names(result)[i] == vars[[j]]$get_name()) {
+        vars[[j]]$value = result[[i]]
         break
       }
     }

@@ -77,19 +77,19 @@ p1 = Variable$new(type = "int", value = 3, kind = "parameter")
 
 # decision variables
 v1 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value), 
-                  name = "v1")
+                  name = "wa")
 v2 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value), 
-                  name = "v2")
+                  name = "nt")
 v3 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value), 
-                  name = "v3")
+                  name = "sa")
 v4 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value),
-                  name = "v4")
+                  name = "q")
 v5 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value),
-                  name = "v5")
+                  name = "nsw")
 v6 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value),
-                  name = "v6")
+                  name = "v")
 v7 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value),
-                  name = "v7")
+                  name = "t")
 vars = c(v1, v2, v3, v4, v5, v6, v7)
 
 # constraints
@@ -123,7 +123,12 @@ After everything is set up, all we need to do is
 
 ```{r}
 res = solve(m, s)
-print(res)
+
+# print solution
+for(i in 1:length(vars)) {
+  cmd = sprintf("%s = %s", vars[[i]]$get_name(), vars[[i]]$value)
+  print(eval(cmd))
+}
 ```
 
 A Minizinc implementation of the same problem is given below:
