@@ -41,11 +41,19 @@ Model = R6Class("Model",
     #' @param decision
     #' @param constraints
     #' @param objective
-    initialize = function(parameter = NULL, decision = NULL, constraints = NULL,
-                          objective = NULL) {
-      self$parameter = parameter
+    initialize = function(parameter = NULL, decision, constraints, objective) {
+      if(!is.null(parameter)) {
+        assert_list(parameter, "Variable")
+        self$parameter = parameter
+      }
+
+      assert_list(decision, "Variable")
       self$decision = decision
+
+      assert_list(constraints, "Constraint")
       self$constraints = constraints
+
+      assert_choice(objective, .globals$objectives)
       self$objective = objective
     }
   )

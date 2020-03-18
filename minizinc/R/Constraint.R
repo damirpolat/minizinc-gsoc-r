@@ -3,7 +3,7 @@
 #' @description
 #' Constraint is a class to describe Minizinc constraints on variables.
 #' It contains information that is needed to define a Minizinc constraint, such as
-#' type of constraint (==, >, etc.) and variables involved in a given constraint.
+#' type of constraint (==, !=, >, <, >=, <=) and variables involved in a given constraint.
 #'
 #' @export
 #' @examples
@@ -34,9 +34,13 @@ Constraint = R6Class("Constraint",
     #' Creates a new instance of Constraint class.
     #' @param constraint
     #' @param variables
-    initialize = function(constraint = NULL, variables = NULL) {
+    initialize = function(constraint, variables) {
+      assert_choice(constraint, .globals$constraints)
       self$constraint = constraint
+
+      assert_list(variables, "Variable")
       self$variables = variables
+
       private$.static$constraint = private$.static$constraint + 1
       private$.name = paste("c", private$.static$constraint, sep = "")
     },

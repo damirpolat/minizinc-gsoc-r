@@ -1,7 +1,7 @@
-#' @title Solve models
+#' @title Evaluate models
 #'
 #' @description
-#' This function is used to solve a given model. The function modifies
+#' This function is used to evaluate a given model. The function modifies
 #' variable objects and sets `value` fields with found solutions. It also
 #' returns solution in list format.
 #'
@@ -26,19 +26,12 @@
 #' # Example path
 #' set_path("/home/damir/software/MiniZincIDE-2.4.2-bundle-linux/bin/minizinc")
 #'
-#' res = solve(model, solver)
+#' res = eval_model(model, solver)
 #' print(res)
-solve = function(model, solver) {
-  # perform type checking and assertions
+eval_model = function(model, solver) {
   # different action depending on objective
   decision = model$decision
-
-  if(!is.null(model$parameter)) {
-    parameter = model$parameter
-  } else {
-    parameter = NULL
-  }
-
+  parameter = model$parameter
   constraints = model$constraints
   obj = model$objective
 

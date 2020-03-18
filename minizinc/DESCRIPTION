@@ -14,7 +14,8 @@ LazyData: true
 Imports: 
 	R6,
 	rjson,
-	rlang
+	rlang,
+	checkmate
 RoxygenNote: 7.1.0
 Suggests: 
     knitr,

@@ -51,8 +51,12 @@ Variable = R6Class("Variable",
     #' @param domain
     #' @param name
     initialize = function(type, kind, value = NULL, domain = NULL, name = NULL) {
+      assert_choice(type, .globals$types)
       self$type = type
+
+      assert_choice(kind, .globals$kinds)
       self$kind = kind
+
       if(kind == "parameter" && !is.null(value)) {
         self$value = value
       }

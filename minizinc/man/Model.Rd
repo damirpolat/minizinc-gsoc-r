@@ -46,12 +46,7 @@ model$constraints
 \subsection{Method \code{new()}}{
 Creates a new instance of Model class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Model$new(
-  parameter = NULL,
-  decision = NULL,
-  constraints = NULL,
-  objective = NULL
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Model$new(parameter = NULL, decision, constraints, objective)}\if{html}{\out{</div>}}
 }
 
 }

@@ -3,7 +3,7 @@ document()
 remove.packages("minizinc")
 install_local(".", build_vignettes = TRUE, upgrade = "never")
 .rs.restartR()
-rm(list=ls())
+rm(list = ls(all.names = TRUE))
 library(minizinc)
 
 set_path("/home/damir/software/MiniZincIDE-2.4.2-bundle-linux/bin/minizinc")
@@ -40,7 +40,7 @@ constr = c(c1, c2, c3, c4, c5, c6, c7, c8, c9)
 m = Model$new(parameter = c(p1), decision = vars, constraints = constr, 
               objective = "satisfy")
 s = Solver$new(name  = "gecode")
-res = solve(m, s)
+res = eval_model(m, s)
 
 # print solution
 for(i in 1:length(vars)) {

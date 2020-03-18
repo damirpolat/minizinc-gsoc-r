@@ -6,7 +6,7 @@
 \alias{.globals}
 \title{R Interface to Minizinc}
 \format{
-An object of class \code{environment} of length 1.
+An object of class \code{environment} of length 5.
 }
 \usage{
 .globals

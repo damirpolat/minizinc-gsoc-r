@@ -26,7 +26,11 @@ Solver = R6Class("Solver",
     #' @param name
     #' @param config
     initialize = function(name = NULL, config = NULL) {
-      self$name = name
+      if(!is.null(name)) {
+        assert_string(name)
+        self$name = name
+      }
+
       self$config = config
     }
   )

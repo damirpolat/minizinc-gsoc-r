@@ -122,7 +122,7 @@ set_path("/home/damir/software/MiniZincIDE-2.4.2-bundle-linux/bin/minizinc")
 After everything is set up, all we need to do is 
 
 ```{r}
-res = solve(m, s)
+res = eval_model(m, s)
 
 # print solution
 for(i in 1:length(vars)) {

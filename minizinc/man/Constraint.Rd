@@ -6,7 +6,7 @@
 \description{
 Constraint is a class to describe Minizinc constraints on variables.
 It contains information that is needed to define a Minizinc constraint, such as
-type of constraint (==, >, etc.) and variables involved in a given constraint.
+type of constraint (==, !=, >, <, >=, <=) and variables involved in a given constraint.
 }
 \examples{
 # Create variables and constraints
@@ -55,7 +55,7 @@ Taken from Minizinc documentation.}
 \subsection{Method \code{new()}}{
 Creates a new instance of Constraint class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Constraint$new(constraint = NULL, variables = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Constraint$new(constraint, variables)}\if{html}{\out{</div>}}
 }
 
 }
