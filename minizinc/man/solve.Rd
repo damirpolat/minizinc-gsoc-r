@@ -7,17 +7,17 @@
 solve(model, solver)
 }
 \arguments{
-\item{model}{\code{\link{Model}}
-Object of class Model.}
+\item{model}{Object of class \code{\link{Model}}.}
 
-\item{solver}{Object of class Solver.}
+\item{solver}{Object of class \code{\link{Solver}}.}
 }
 \value{
 list with results
 }
 \description{
-This function is used to solve a given model. The function returns
-solution in list format.
+This function is used to solve a given model. The function modifies
+variable objects and sets `value` fields with found solutions. It also
+returns solution in list format.
 }
 \examples{
 # Create and solve a Minizinc model

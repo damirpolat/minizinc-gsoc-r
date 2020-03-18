@@ -15,6 +15,9 @@
 #' p$type
 #' p$get_name()
 #'
+#' # Manually set name of this variable. Default name used otherwise
+#' p$set_name("parameter")
+#'
 #' # Create a decision variable
 #' d = Variable$new(type = "int", kind = "decision", domain = c(0, 10))
 #' d$kind
@@ -41,10 +44,15 @@ Variable = R6Class("Variable",
     domain = NULL,
 
     #' @description
-    #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(type, kind, value = NULL, domain = NULL) {
-      self$type      = type
-      self$kind      = kind
+    #' Creates a new instance of Variable class.
+    #' @param type
+    #' @param kind
+    #' @param value
+    #' @param domain
+    #' @param name
+    initialize = function(type, kind, value = NULL, domain = NULL, name = NULL) {
+      self$type = type
+      self$kind = kind
       if(kind == "parameter" && !is.null(value)) {
         self$value = value
       }
@@ -52,14 +60,18 @@ Variable = R6Class("Variable",
         self$domain = domain
       }
 
-      # update variable name counts
-      if(self$kind == "parameter") {
-        private$.static$parameter = private$.static$parameter + 1
-        private$.name = paste("p", private$.static$parameter, sep = "")
-      }
-      if(self$kind == "decision") {
-        private$.static$decision = private$.static$decision + 1
-        private$.name = paste("d", private$.static$decision, sep = "")
+      if(!is.null(name)) {
+        private$.name = name
+      } else {
+        # update variable name counts
+        if(self$kind == "parameter") {
+          private$.static$parameter = private$.static$parameter + 1
+          private$.name = paste("p", private$.static$parameter, sep = "")
+        }
+        if(self$kind == "decision") {
+          private$.static$decision = private$.static$decision + 1
+          private$.name = paste("d", private$.static$decision, sep = "")
+        }
       }
     },
 
@@ -67,6 +79,13 @@ Variable = R6Class("Variable",
     #' Returns variable name that is used in Minizinc model.
     get_name = function() {
       return(private$.name)
+    },
+
+    #' @description
+    #' Set variable name
+    #' @param name
+    set_name = function(name) {
+      private$.name = name
     }
   ),
 

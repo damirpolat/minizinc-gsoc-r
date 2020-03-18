@@ -1,14 +1,14 @@
 #' @title Solve models
 #'
 #' @description
-#' This function is used to solve a given model. The function returns
-#' solution in list format.
+#' This function is used to solve a given model. The function modifies
+#' variable objects and sets `value` fields with found solutions. It also
+#' returns solution in list format.
 #'
-#'
-#' @param model \code{\link{Model}}
-#'   Object of class Model.
+#' @param model
+#'   Object of class \code{\link{Model}}.
 #' @param solver
-#'   Object of class Solver.
+#'   Object of class \code{\link{Solver}}.
 #'
 #' @return list with results
 #' @export
@@ -46,6 +46,44 @@ solve = function(model, solver) {
          call. = TRUE)
   }
 
+  # get Minizinc code
+  code = .convert_minizinc(decision, parameter, constraints)
+
+  write(code, file = "tmp.mzn", append = FALSE)
+
+  # get minizinc path
+  path = get_path()
+  if(is.null(path)) {
+    stop("Path to Minizinc is not set. Set path using set_path()", call. = TRUE)
+  }
+
+  # Build system command
+  cmd = .write_cmd(path, solver)
+
+  system(cmd)
+  res = fromJSON(file = "tmp.out")
+
+  # assign solutions to variables
+  .assign_vars(res)
+
+  return(res)
+}
+
+
+#' @title Create Minizinc
+#'
+#' @description
+#' This function converts R objects into Minizinc code.
+#'
+#' @param decision
+#'   A list of decision \code{\link{Variable}} objects.
+#' @param parameter
+#'   A list of parameter \code{\link{Variable}} objects.
+#' @param constraints
+#'   A list of \code{\link{Constraint}} objects
+#'
+#' @return string with Minizinc code
+.convert_minizinc = function(decision, parameter, constraints) {
   # build minizinc code from objects
   code = ""
 
@@ -70,18 +108,43 @@ solve = function(model, solver) {
                    constraints[[i]]$variables[[2]]$get_name())
   }
 
-  write(code, file = "tmp.mzn", append = FALSE)
+  return(code)
+}
 
-  # get minizinc path
-  path = get_path()
-  if(is.null(path)) {
-    stop("Path to Minizinc is not set. Set path using set_path()", call. = TRUE)
-  }
+
+#' @title Write system command
+#'
+#' @description
+#' This function builds a system command to execute.
+#'
+#' @param path
+#' A string with Minizinc path
+#'
+#' @param solver
+#' \code{\link{Solver}} object
+.write_cmd = function(path, solver) {
   cmd = sprintf("%s tmp.mzn -o tmp.out", path)
   cmd = sprintf("%s --solver %s", cmd, solver$name)
   cmd = sprintf("%s --output-mode json", cmd)
-  system(cmd)
-  retval = fromJSON(file = "tmp.out")
 
-  return(retval)
+  return(cmd)
+}
+
+
+#' @title Assign result to variables
+#'
+#' @description
+#' Assigns results back to decision variable objects.
+#'
+#' @param result
+#' A named list with results
+.assign_vars = function(result) {
+  for(i in 1:length(names(result))) {
+    for(j in 1:length(decision)) {
+      if(names(result)[i] == decision[[j]]$get_name()) {
+        decision[[j]]$value = result[[i]]
+        break
+      }
+    }
+  }
 }

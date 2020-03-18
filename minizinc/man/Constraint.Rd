@@ -53,7 +53,7 @@ Taken from Minizinc documentation.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Creates a new instance of this [R6][R6::R6Class] class.
+Creates a new instance of Constraint class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Constraint$new(constraint = NULL, variables = NULL)}\if{html}{\out{</div>}}
 }

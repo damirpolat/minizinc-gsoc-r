@@ -76,13 +76,20 @@ Below is an example of map coloring problem of Australian states.
 p1 = Variable$new(type = "int", value = 3, kind = "parameter")
 
 # decision variables
-v1 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
-v2 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
-v3 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
-v4 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
-v5 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
-v6 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
-v7 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
+v1 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value), 
+                  name = "v1")
+v2 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value), 
+                  name = "v2")
+v3 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value), 
+                  name = "v3")
+v4 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value),
+                  name = "v4")
+v5 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value),
+                  name = "v5")
+v6 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value),
+                  name = "v6")
+v7 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value),
+                  name = "v7")
 vars = c(v1, v2, v3, v4, v5, v6, v7)
 
 # constraints

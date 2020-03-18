@@ -31,7 +31,7 @@ Constraint = R6Class("Constraint",
     variables = NULL,
 
     #' @description
-    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' Creates a new instance of Constraint class.
     #' @param constraint
     #' @param variables
     initialize = function(constraint = NULL, variables = NULL) {

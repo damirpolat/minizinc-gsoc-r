@@ -9,13 +9,20 @@ library(minizinc)
 set_path("/home/damir/software/MiniZincIDE-2.4.2-bundle-linux/bin/minizinc")
 
 p1 = Variable$new(type = "int", value = 3, kind = "parameter")
-v1 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
-v2 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
-v3 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
-v4 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
-v5 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
-v6 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
-v7 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value))
+v1 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value), 
+                  name = "v1")
+v2 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value), 
+                  name = "v2")
+v3 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value), 
+                  name = "v3")
+v4 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value),
+                  name = "v4")
+v5 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value),
+                  name = "v5")
+v6 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value),
+                  name = "v6")
+v7 = Variable$new(type = "int", kind = "decision", domain = c(1, p1$value),
+                  name = "v7")
 vars = c(v1, v2, v3, v4, v5, v6, v7)
 
 c1 = Constraint$new(constraint = "!=", variables = c(v1, v2))
@@ -34,3 +41,9 @@ m = Model$new(parameter = c(p1), decision = vars, constraints = constr,
               objective = "satisfy")
 s = Solver$new(name  = "gecode")
 res = solve(m, s)
+
+# print solution
+for(i in 1:length(vars)) {
+  cmd = sprintf("%s = %s", vars[[i]]$get_name(), vars[[i]]$value)
+  print(eval(cmd))
+}

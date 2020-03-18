@@ -17,6 +17,9 @@ p$value
 p$type
 p$get_name()
 
+# Manually set name of this variable. Default name used otherwise
+p$set_name("parameter")
+
 # Create a decision variable
 d = Variable$new(type = "int", kind = "decision", domain = c(0, 10))
 d$kind
@@ -52,6 +55,7 @@ meaningful for decision variables.}
 \itemize{
 \item \href{#method-new}{\code{Variable$new()}}
 \item \href{#method-get_name}{\code{Variable$get_name()}}
+\item \href{#method-set_name}{\code{Variable$set_name()}}
 \item \href{#method-clone}{\code{Variable$clone()}}
 }
 }
@@ -59,9 +63,9 @@ meaningful for decision variables.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Creates a new instance of this [R6][R6::R6Class] class.
+Creates a new instance of Variable class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Variable$new(type, kind, value = NULL, domain = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Variable$new(type, kind, value = NULL, domain = NULL, name = NULL)}\if{html}{\out{</div>}}
 }
 
 }
@@ -72,6 +76,16 @@ Creates a new instance of this [R6][R6::R6Class] class.
 Returns variable name that is used in Minizinc model.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Variable$get_name()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-set_name"></a>}}
+\if{latex}{\out{\hypertarget{method-set_name}{}}}
+\subsection{Method \code{set_name()}}{
+Set variable name
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Variable$set_name(name)}\if{html}{\out{</div>}}
 }
 
 }
