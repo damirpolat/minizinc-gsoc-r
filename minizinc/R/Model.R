@@ -9,7 +9,7 @@
 #' @examples
 #' # Create variables, constraints and put them in a model
 #' v1 = Variable$new(type = "int", kind = "decision", domain = c(0, 10))
-#' v1 = Variable$new(type = "int", kind = "decision", domain = c(0, 5))
+#' v2 = Variable$new(type = "int", kind = "decision", domain = c(0, 5))
 #'
 #' constr = Constraint$new(constraint = "<", variables = c(v1, v2))
 #'

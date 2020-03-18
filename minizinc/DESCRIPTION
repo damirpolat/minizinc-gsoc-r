@@ -12,9 +12,12 @@ License: What license it uses
 Encoding: UTF-8
 LazyData: true
 Imports: 
-	R6
+	R6,
+	rjson,
+	rlang
 RoxygenNote: 7.1.0
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
