@@ -3,14 +3,14 @@
 #' @description
 #' This function is used to evaluate a given model. The function modifies
 #' variable objects and sets `value` fields with found solutions. It also
-#' returns solution in list format.
+#' returns (`logical(1)`) depending on whether Minizinc found a satisfiable solution.
 #'
 #' @param model
 #'   Object of class \code{\link{Model}}.
 #' @param solver
 #'   Object of class \code{\link{Solver}}.
 #'
-#' @return list with results
+#' @return (`logical(1)`). `TRUE` if model is satisfiable and `FALSE` otherwise.
 #' @export
 #' @examples
 #' # Create and solve a Minizinc model
@@ -53,15 +53,34 @@ eval_model = function(model, solver) {
     stop("Path to Minizinc is not set. Set path using set_path()", call. = TRUE)
   }
 
-  # Build system command
+  # build system command
   cmd = write_cmd(path, solver)
   system(cmd)
-  res = fromJSON(file = "tmp.out")
 
-  # assign solutions to variables
-  assign_vars(res, decision)
+  # get results
+  res = tryCatch(
+    expr = {
+      fromJSON(file = "tmp.out")
+    },
+    error = function(e) {
+      return(NULL)
+  })
 
-  return(res)
+  retval = TRUE
+
+  # read file again
+  if (is.null(res)) {
+    res = readLines(con = "tmp.out", n = 1L)
+    res = grepl(pattern = "UNSAT", res)
+    if(res) {
+      retval = FALSE
+    }
+  } else {
+    # assign solutions to variables
+    assign_vars(res, decision)
+  }
+
+  return(retval)
 }
 
 

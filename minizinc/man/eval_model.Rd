@@ -12,12 +12,12 @@ eval_model(model, solver)
 \item{solver}{Object of class \code{\link{Solver}}.}
 }
 \value{
-list with results
+(`logical(1)`). `TRUE` if model is satisfiable and `FALSE` otherwise.
 }
 \description{
 This function is used to evaluate a given model. The function modifies
 variable objects and sets `value` fields with found solutions. It also
-returns solution in list format.
+returns (`logical(1)`) depending on whether Minizinc found a satisfiable solution.
 }
 \examples{
 # Create and solve a Minizinc model

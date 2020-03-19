@@ -1,4 +1,4 @@
-int: p2 = 3;
+int: p1 = 3;
 var 1..3: v1;
 var 1..3: v2;
 var 1..3: v3;

@@ -124,11 +124,14 @@ After everything is set up, all we need to do is
 ```{r}
 res = eval_model(m, s)
 
-# print solution
-for(i in 1:length(vars)) {
-  cmd = sprintf("%s = %s", vars[[i]]$get_name(), vars[[i]]$value)
-  print(eval(cmd))
+if(res) {
+  # print solution
+  for(i in 1:length(vars)) {
+    cmd = sprintf("%s = %s", vars[[i]]$get_name(), vars[[i]]$value)
+    print(eval(cmd))
+  }
 }
+
 ```
 
 A Minizinc implementation of the same problem is given below:
