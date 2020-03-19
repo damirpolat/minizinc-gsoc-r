@@ -1,5 +1,5 @@
 Package: minizinc
-Title: Object Oriented Interface to Minizinc in R 
+Title: R Interface to Minizinc
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Damir",

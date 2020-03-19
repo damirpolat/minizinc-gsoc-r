@@ -3,7 +3,7 @@
 #' @description
 #' This function is used to evaluate a given model. The function modifies
 #' variable objects and sets `value` fields with found solutions. It also
-#' returns (`logical(1)`) depending on whether Minizinc found a satisfiable solution.
+#' returns TRUE/FALSE depending on whether Minizinc found a satisfiable solution.
 #'
 #' @param model
 #'   Object of class \code{\link{Model}}.
@@ -29,7 +29,6 @@
 #' res = eval_model(model, solver)
 #' print(res)
 eval_model = function(model, solver) {
-  # different action depending on objective
   decision = model$decision
   parameter = model$parameter
   constraints = model$constraints
@@ -84,7 +83,7 @@ eval_model = function(model, solver) {
 }
 
 
-#' @title Create Minizinc
+#' @title Convert to Minizinc code
 #'
 #' @description
 #' This function converts R objects into Minizinc code.

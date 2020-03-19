@@ -2,7 +2,7 @@
 % Please edit documentation in R/evaluate.R
 \name{convert_minizinc}
 \alias{convert_minizinc}
-\title{Create Minizinc}
+\title{Convert to Minizinc code}
 \usage{
 convert_minizinc(decision, parameter, constraints)
 }

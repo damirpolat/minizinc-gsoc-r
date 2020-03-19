@@ -3,15 +3,15 @@
 \docType{package}
 \name{minizinc}
 \alias{minizinc}
-\alias{.globals}
 \title{R Interface to Minizinc}
-\format{
-An object of class \code{environment} of length 5.
-}
-\usage{
-.globals
-}
 \description{
-R interface to Minizinc language.
+The goal of this package is to bring the power of Minizinc constraint
+modeling language to R users in a way that does not require any
+knowledge of Minizinc.
+Users can describe their constraint optimization problems in R objects.
+The package then converts these problems to Minizinc language.
+The results are parsed back into R objects. This way users
+still have the access to all features and constraints provided by
+Minizinc as well as low-level solvers without knowing anything
+about lower-level details.
 }
-\keyword{datasets}

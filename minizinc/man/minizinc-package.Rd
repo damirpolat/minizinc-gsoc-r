@@ -4,9 +4,17 @@
 \name{minizinc-package}
 \alias{minizinc}
 \alias{minizinc-package}
-\title{minizinc: Object Oriented Interface to Minizinc in R}
+\title{minizinc: R Interface to Minizinc}
 \description{
-
+The goal of this package is to bring the power of Minizinc constraint
+modeling language to R users in a way that does not require any
+knowledge of Minizinc.
+Users can describe their constraint optimization problems in R objects.
+The package then converts these problems to Minizinc language.
+The results are parsed back into R objects. This way users
+still have the access to all features and constraints provided by
+Minizinc as well as low-level solvers without knowing anything
+about lower-level details.
 }
 \author{
 \strong{Maintainer}: Damir Pulatov \email{dpulatov@uwyo.edu} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
