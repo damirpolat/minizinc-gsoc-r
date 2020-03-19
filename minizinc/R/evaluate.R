@@ -171,3 +171,20 @@ assign_vars = function(result, vars) {
     }
   }
 }
+
+
+#' @title Print variable values
+#'
+#' @description
+#' Given a list of variables, this function prints their values.
+#'
+#' @param vars
+#' A list of \code{\link{Variable}} objects
+#'
+#' @export
+print_vars = function(vars) {
+  for(i in 1:length(vars)) {
+    cmd = sprintf("%s = %s", vars[[i]]$get_name(), vars[[i]]$value)
+    print(eval(cmd))
+  }
+}

@@ -42,8 +42,4 @@ m = Model$new(parameter = c(p1), decision = vars, constraints = constr,
 s = Solver$new(name  = "gecode")
 res = eval_model(m, s)
 
-# print solution
-for(i in 1:length(vars)) {
-  cmd = sprintf("%s = %s", vars[[i]]$get_name(), vars[[i]]$value)
-  print(eval(cmd))
-}
+print_vars(vars)
